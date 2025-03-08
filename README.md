@@ -1,3 +1,5 @@
+https://modrinth.com/mod/vanilla-spawners-expanded
+
 # **Vanilla Spawners Expanded**
 
 **Enhance your spawners with Vanilla Spawners Expanded!**
