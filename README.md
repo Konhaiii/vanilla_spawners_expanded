@@ -20,10 +20,6 @@ Looking to customize and optimize your spawners in Minecraft? Discover **Vanilla
 
 - **Configurable:** Adjust the mod's settings with a detailed configuration file to tailor the experience to your preferences.
 
-## **Why Choose Vanilla Spawners Expanded?**
-
-- **Customization:** Create varied environments with personalized spawners.
-- **Efficiency:** Optimize your mob farms for increased gains with less effort.
 - **Fabric Compatibility:** Designed exclusively for Fabric, this mod integrates well with other popular mods and supports mobs added by them, allowing you to customize your spawners with a wide variety of creatures.
 
 ## **Configuration Options:**
