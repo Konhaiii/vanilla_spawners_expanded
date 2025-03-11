@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "vanilla_spawners_expanded:item/mob_soul"
+	}
+}

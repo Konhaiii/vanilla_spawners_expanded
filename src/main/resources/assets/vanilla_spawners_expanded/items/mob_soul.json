@@ -1,0 +1,6 @@
+{
+	"model": {
+		"type": "minecraft:model",
+		"model": "vanilla_spawners_expanded:item/mob_soul"
+	}
+}

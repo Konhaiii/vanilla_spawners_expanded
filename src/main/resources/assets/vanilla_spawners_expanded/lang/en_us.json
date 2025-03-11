@@ -1,0 +1,51 @@
+{
+    "item.vanilla_spawners_expanded.spawner_calibrator": "Spawner Calibrator",
+    "item.vanilla_spawners_expanded.spawner_igniter": "Spawner Igniter",
+    "item.vanilla_spawners_expanded.cursed_bottle": "Cursed Bottle",
+    "item.vanilla_spawners_expanded.mob_soul": "Soul in a Bottle",
+    "item.vanilla_spawners_expanded.soul_desintegrator": "Soul Desintegrator",
+    "item.vanilla_spawners_expanded.spawner_upgrade_redstone": "Redstone Spawner Upgrade",
+    "item.vanilla_spawners_expanded.spawner_upgrade_crowd": "Crowd Spawner Upgrade",
+    "item.vanilla_spawners_expanded.spawner_upgrade_range": "Range Spawner Upgrade",
+    "item.vanilla_spawners_expanded.spawner_upgrade_speed": "Speed Spawner Upgrade",
+    "item.vanilla_spawners_expanded.calibrated_spawner": "Calibrated Spawner",
+
+    "item.vanilla_spawners_expanded.spawner_calibrator.desc1": "Use on a vanilla spawner to",
+    "item.vanilla_spawners_expanded.spawner_calibrator.desc2": "make it a calibrated spawner.",
+    "item.vanilla_spawners_expanded.spawner_igniter.desc1": "Use on an extinct calibrated spawner to",
+    "item.vanilla_spawners_expanded.spawner_igniter.desc2": "lit it. This is necessary for it to work.",
+    "item.vanilla_spawners_expanded.cursed_bottle.desc1": "Use on a compatible mob to",
+    "item.vanilla_spawners_expanded.cursed_bottle.desc2": "store its soul in the bottle.",
+    "item.vanilla_spawners_expanded.cursed_bottle.desc3": "Use on a calibrated spawner to",
+    "item.vanilla_spawners_expanded.cursed_bottle.desc4": "change the mob soul trapped in it.",
+    "item.vanilla_spawners_expanded.soul_desintegrator.desc1": "Use on a calibrated spawner to",
+    "item.vanilla_spawners_expanded.soul_desintegrator.desc2": "permanently delete its mob soul.",
+    "item.vanilla_spawners_expanded.spawner_upgrade_redstone.desc1": "Use on a calibrated spawner to make it",
+    "item.vanilla_spawners_expanded.spawner_upgrade_redstone.desc2": "stops when it receives a redstone signal.",
+    "item.vanilla_spawners_expanded.spawner_upgrade_crowd.desc1": "Use on a calibrated spawner to change the",
+    "item.vanilla_spawners_expanded.spawner_upgrade_crowd.desc2": "local mob cap from %s to %s entities.",
+    "item.vanilla_spawners_expanded.spawner_upgrade_range.desc1": "Use on a calibrated spawner to change the",
+    "item.vanilla_spawners_expanded.spawner_upgrade_range.desc2": "activation range from %s to %s blocks.",
+    "item.vanilla_spawners_expanded.spawner_upgrade_speed.desc1": "Use on a calibrated spawner to change the",
+    "item.vanilla_spawners_expanded.spawner_upgrade_speed.desc2": "minimum time between spawn cycles from %s to %s",
+    "item.vanilla_spawners_expanded.spawner_upgrade_speed.desc3": "ticks and the maximum time from %s to %s ticks.",
+
+    "block.vanilla_spawners_expanded.calibrated_spawner.desc1": "Status:",
+    "block.vanilla_spawners_expanded.calibrated_spawner.desc2": "Not lit",
+    "block.vanilla_spawners_expanded.calibrated_spawner.desc3": "Lit",
+    "block.vanilla_spawners_expanded.calibrated_spawner.desc4": "Empty",
+    "block.vanilla_spawners_expanded.calibrated_spawner.desc5": "Upgrades:",
+    "block.vanilla_spawners_expanded.calibrated_spawner.desc6": "None",
+    "block.vanilla_spawners_expanded.calibrated_spawner.desc7": "Crowd",
+    "block.vanilla_spawners_expanded.calibrated_spawner.desc8": "Range",
+    "block.vanilla_spawners_expanded.calibrated_spawner.desc9": "Speed",
+    "block.vanilla_spawners_expanded.calibrated_spawner.desc10": "Redstone",
+
+    "keyword.vanilla_spawners_expanded.soul_type": "Soul type:",
+
+    "block.vanilla_spawners_expanded.calibrated_spawner": "Calibrated Spawner",
+
+    "itemGroup.vanilla_spawners_expanded": "Vanilla Spawners Expanded",
+
+    "config.jade.plugin_debug.calibrated_spawner": "Debug Calibrated Spawner"
+}

@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "vanilla_spawners_expanded",
+	"version": "${version}",
+	"name": "Vanilla Spawners Expanded",
+	"description": "Customize spawners freely.",
+	"authors": [
+		"Konhaiii"
+	],
+	"contact": {
+		"homepage": "https://github.com/Konhaiii/vanilla_spawners_expanded",
+		"sources": "https://github.com/Konhaiii/vanilla_spawners_expanded"
+	},
+	"license": "CC BY-NC 4.0",
+	"icon": "assets/vanilla_spawners_expanded/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"konhaiii.vanilla_spawners_expanded.VanillaSpawnersExpanded"
+		],
+		"client": [
+			"konhaiii.vanilla_spawners_expanded.VanillaSpawnersExpandedClient"
+		],
+		"jade": [
+			"konhaiii.vanilla_spawners_expanded.jade.JadePlugin"
+		]
+	},
+	"mixins": [
+		"vanilla_spawners_expanded.mixins.json",
+		{
+			"config": "vanilla_spawners_expanded.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"BGB",
+		"GFG",
+		"BGB"
+	],
+	"key": {
+		"B": "minecraft:nether_brick",
+		"G": "minecraft:soul_sand",
+		"F": "minecraft:copper_ingot"
+	},
+	"result": {
+		"id": "vanilla_spawners_expanded:soul_desintegrator",
+		"count": 1
+	}
+}

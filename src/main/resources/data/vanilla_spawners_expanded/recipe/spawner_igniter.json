@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"BWB",
+		"PNP",
+		"BWB"
+	],
+	"key": {
+		"B": "minecraft:nether_brick",
+		"W": "minecraft:wind_charge",
+		"P": "minecraft:blaze_powder",
+		"N": "minecraft:nether_star"
+	},
+	"result": {
+		"id": "vanilla_spawners_expanded:spawner_igniter",
+		"count": 1
+	}
+}

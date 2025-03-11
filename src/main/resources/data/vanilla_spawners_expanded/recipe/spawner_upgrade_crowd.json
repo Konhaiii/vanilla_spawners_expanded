@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"BGB",
+		"GDG",
+		"BGB"
+	],
+	"key": {
+		"B": "minecraft:nether_brick",
+		"G": "minecraft:glowstone_dust",
+		"D": "minecraft:diamond"
+	},
+	"result": {
+		"id": "vanilla_spawners_expanded:spawner_upgrade_crowd",
+		"count": 1
+	}
+}
