@@ -2,5 +2,13 @@
 	"parent": "item/generated",
 	"textures": {
 		"layer0": "vanilla_spawners_expanded:item/cursed_bottle"
-	}
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"custom_model_data": 1
+			},
+			"model": "vanilla_spawners_expanded:item/mob_soul"
+		}
+	]
 }

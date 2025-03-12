@@ -7,9 +7,15 @@
 		"BRB"
 	],
 	"key": {
-		"B": "minecraft:nether_brick",
-		"R": "minecraft:redstone",
-		"T": "minecraft:tripwire_hook"
+		"B": {
+			"item": "minecraft:nether_brick"
+		},
+		"R": {
+			"item": "minecraft:redstone"
+		},
+		"T": {
+			"item": "minecraft:tripwire_hook"
+		}
 	},
 	"result": {
 		"id": "vanilla_spawners_expanded:spawner_upgrade_redstone",

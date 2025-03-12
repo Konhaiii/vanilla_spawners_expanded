@@ -7,10 +7,18 @@
 		"BWB"
 	],
 	"key": {
-		"B": "minecraft:nether_brick",
-		"W": "minecraft:wind_charge",
-		"P": "minecraft:blaze_powder",
-		"N": "minecraft:nether_star"
+		"B": {
+			"item": "minecraft:nether_brick"
+		},
+		"W": {
+			"item": "minecraft:wind_charge"
+		},
+		"P": {
+			"item": "minecraft:blaze_powder"
+		},
+		"N": {
+			"item": "minecraft:nether_star"
+		}
 	},
 	"result": {
 		"id": "vanilla_spawners_expanded:spawner_igniter",

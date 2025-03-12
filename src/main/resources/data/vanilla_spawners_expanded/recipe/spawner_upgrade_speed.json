@@ -7,9 +7,15 @@
 		"BPB"
 	],
 	"key": {
-		"B": "minecraft:nether_brick",
-		"P": "minecraft:prismarine_crystals",
-		"N": "minecraft:netherite_ingot"
+		"B": {
+			"item": "minecraft:nether_brick"
+		},
+		"P": {
+			"item": "minecraft:prismarine_crystals"
+		},
+		"N": {
+			"item": "minecraft:netherite_ingot"
+		}
 	},
 	"result": {
 		"id": "vanilla_spawners_expanded:spawner_upgrade_speed",

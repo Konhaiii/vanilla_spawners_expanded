@@ -7,9 +7,15 @@
 		"BGB"
 	],
 	"key": {
-		"B": "minecraft:nether_brick",
-		"G": "minecraft:glowstone_dust",
-		"D": "minecraft:diamond"
+		"B": {
+			"item": "minecraft:nether_brick"
+		},
+		"G": {
+			"item": "minecraft:glowstone_dust"
+		},
+		"D": {
+			"item": "minecraft:diamond"
+		}
 	},
 	"result": {
 		"id": "vanilla_spawners_expanded:spawner_upgrade_crowd",

@@ -1,8 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    "vanilla_spawners_expanded:calibrated_spawner",
-    "minecraft:water_bucket"
+    {
+      "item": "vanilla_spawners_expanded:calibrated_spawner"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
   ],
   "result": {
     "id": "vanilla_spawners_expanded:calibrated_spawner",

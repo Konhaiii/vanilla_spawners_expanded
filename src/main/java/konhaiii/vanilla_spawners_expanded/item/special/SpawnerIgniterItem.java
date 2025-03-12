@@ -1,7 +1,5 @@
 package konhaiii.vanilla_spawners_expanded.item.special;
 
-import java.util.List;
-
 import konhaiii.vanilla_spawners_expanded.block.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -22,6 +20,8 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+
+import java.util.List;
 public class SpawnerIgniterItem extends Item {
     public SpawnerIgniterItem(Settings settings) {
         super(settings);
@@ -49,14 +49,14 @@ public class SpawnerIgniterItem extends Item {
                     ((ServerWorld) world).spawnParticles(ParticleTypes.FLAME,
                             blockPos.getX()+0.5, blockPos.getY()+0.5, blockPos.getZ()+0.5, 20, 0.3, 0.3, 0.3, 0.05);
                     itemStack.decrement(1);
-                    return ActionResult.SUCCESS_SERVER;
+                    return ActionResult.SUCCESS;
                 }
             }
         }
         return ActionResult.FAIL;
     }
     @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.translatable("item.vanilla_spawners_expanded.spawner_igniter.desc1").formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("item.vanilla_spawners_expanded.spawner_igniter.desc2").formatted(Formatting.GRAY));
         super.appendTooltip(stack, context, tooltip, type);

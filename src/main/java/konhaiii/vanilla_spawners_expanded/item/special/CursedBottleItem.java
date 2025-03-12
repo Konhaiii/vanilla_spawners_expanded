@@ -1,8 +1,5 @@
 package konhaiii.vanilla_spawners_expanded.item.special;
 
-import java.util.List;
-import java.util.Objects;
-
 import konhaiii.vanilla_spawners_expanded.VanillaSpawnersExpanded;
 import konhaiii.vanilla_spawners_expanded.block.ModBlocks;
 import konhaiii.vanilla_spawners_expanded.item.ModItems;
@@ -10,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.CustomModelDataComponent;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -24,16 +22,19 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.joml.Vector3f;
+
+import java.util.List;
+import java.util.Objects;
 
 public class CursedBottleItem extends Item {
+	public static final Vector3f PARTICLE_COLOR_START = Vec3d.unpackRgb(13915476).toVector3f();
+	public static final Vector3f PARTICLE_COLOR_END = Vec3d.unpackRgb(2105376).toVector3f();
 	public CursedBottleItem(Settings settings) {
 		super(settings);
 	}
@@ -44,7 +45,7 @@ public class CursedBottleItem extends Item {
 		outputStack.set(DataComponentTypes.ITEM_NAME, Text.translatable("item.vanilla_spawners_expanded.mob_soul"));
 		outputStack.set(DataComponentTypes.RARITY, Rarity.EPIC);
 		outputStack.set(DataComponentTypes.MAX_STACK_SIZE, 1);
-		outputStack.set(DataComponentTypes.ITEM_MODEL, Identifier.of(VanillaSpawnersExpanded.MOD_ID, "mob_soul"));
+		outputStack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(1));
 		return outputStack;
 	}
 
@@ -69,10 +70,10 @@ public class CursedBottleItem extends Item {
 				user.setStackInHand(hand, itemStack3);
 				entity.playSound(SoundEvents.ENTITY_ZOMBIE_INFECT, 1f, 0.5f);
 				World world = user.getWorld();
-				((ServerWorld) world).spawnParticles(new DustColorTransitionParticleEffect(13915476, 2105376, 1.5F),
+				((ServerWorld) world).spawnParticles(new DustColorTransitionParticleEffect(PARTICLE_COLOR_START, PARTICLE_COLOR_END, 1.5F),
 						entity.getX(), entity.getY() + entity.getHeight() / 2, entity.getZ(), 20, 0.3, 0.3, 0.3, 1.0);
 				entity.discard();
-				return ActionResult.SUCCESS_SERVER;
+				return ActionResult.SUCCESS;
 			}
 		}
 		return ActionResult.PASS;
@@ -90,12 +91,12 @@ public class CursedBottleItem extends Item {
 			BlockState blockState = world.getBlockState(blockPos);
 			BlockEntity blockEntity = world.getBlockEntity(blockPos);
 			NbtComponent nbtComponent = itemStack.getOrDefault(DataComponentTypes.ENTITY_DATA, NbtComponent.DEFAULT);
+			NbtCompound nbtCompound = nbtComponent.copyNbt();
 			if (blockState.getBlock() == ModBlocks.CALIBRATED_SPAWNER && !nbtComponent.isEmpty()) {
 				assert blockEntity != null;
 				NbtCompound spawnerNbt = blockEntity.createNbt(registryManager);
 				if (!spawnerNbt.getCompound("SpawnData").getCompound("entity").contains("id")) {
-					spawnerNbt.getCompound("SpawnData").getCompound("entity").putString("id",
-							Objects.requireNonNull(nbtComponent.getId()).toString());
+					spawnerNbt.getCompound("SpawnData").put("entity", nbtCompound);
 					short speedUpgradeMaxValue = (short) VanillaSpawnersExpanded.config.speedUpgradeMaxValue;
 					short speedDefaultMaxValue = (short) VanillaSpawnersExpanded.config.speedDefaultMaxValue;
 					if (spawnerNbt.getBoolean("HasSpeedUpgrade")) {
@@ -107,7 +108,7 @@ public class CursedBottleItem extends Item {
 					world.updateListeners(blockPos, blockState, blockState, Block.NOTIFY_ALL);
 					world.emitGameEvent(player, GameEvent.BLOCK_CHANGE, blockPos);
 					world.playSound(null, blockPos, SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.BLOCKS, 1.0f, 1.25f);
-					((ServerWorld) world).spawnParticles(new DustColorTransitionParticleEffect(13915476, 2105376, 1.5F),
+					((ServerWorld) world).spawnParticles(new DustColorTransitionParticleEffect(PARTICLE_COLOR_START, PARTICLE_COLOR_END, 1.5F),
 							blockPos.getX()+0.5, blockPos.getY()+0.5, blockPos.getZ()+0.5, 20, 0.5, 0.5, 0.5, 0.05);
 					ItemStack outputStack;
 					if (VanillaSpawnersExpanded.config.cursedBottleIsReusable) {
@@ -118,18 +119,20 @@ public class CursedBottleItem extends Item {
 					assert player != null;
 					ItemStack itemStack3 = ItemUsage.exchangeStack(itemStack, player, outputStack, false);
 					player.setStackInHand(context.getHand(), itemStack3);
-					return ActionResult.SUCCESS_SERVER;
+					return ActionResult.SUCCESS;
 				}
 			}
 		}
 		return ActionResult.FAIL;
 	}
 	@Override
-	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.ENTITY_DATA, NbtComponent.DEFAULT);
+		NbtCompound nbtComponentCompound = nbtComponent.copyNbt();
+		Identifier soulEntityId = Identifier.tryParse(nbtComponentCompound.getString("id"));
 		if (!nbtComponent.isEmpty()) {
 			tooltip.add(Text.translatable("keyword.vanilla_spawners_expanded.soul_type").formatted(Formatting.GRAY).append(ScreenTexts.SPACE)
-					.append(Text.translatable(Objects.requireNonNull(nbtComponent.getId()).toTranslationKey("entity")).formatted(Formatting.WHITE)));
+					.append(Text.translatable(Objects.requireNonNull(soulEntityId).toTranslationKey("entity")).formatted(Formatting.WHITE)));
 			tooltip.add(ScreenTexts.EMPTY);
 			tooltip.add(Text.translatable("item.vanilla_spawners_expanded.cursed_bottle.desc3").formatted(Formatting.GRAY));
 			tooltip.add(Text.translatable("item.vanilla_spawners_expanded.cursed_bottle.desc4").formatted(Formatting.GRAY));

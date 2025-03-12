@@ -10,12 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
-
-import java.util.function.Function;
 
 public class ModItems {
 
@@ -26,40 +23,26 @@ public class ModItems {
 			.displayName(Text.translatable("itemGroup.vanilla_spawners_expanded"))
 			.build();
 
-	public static Item SPAWNER_CALIBRATOR = registerItem("spawner_calibrator", SpawnerCalibratorItem::new,
-			new Item.Settings().rarity(Rarity.UNCOMMON));
-	public static Item SPAWNER_IGNITER = registerItem("spawner_igniter", SpawnerIgniterItem::new,
-			new Item.Settings().rarity(Rarity.EPIC));
-	public static Item CURSED_BOTTLE = registerItem("cursed_bottle", CursedBottleItem::new,
-			new Item.Settings().maxCount(16).rarity(Rarity.UNCOMMON));
-	public static Item SOUL_DESINTEGRATOR = registerItem("soul_desintegrator", SoulDesintegratorItem::new,
-			new Item.Settings());
-	public static Item SPAWNER_UPGRADE_REDSTONE = registerItem("spawner_upgrade_redstone", SpawnerUpgradeRedstoneItem::new,
-			new Item.Settings());
-	public static Item SPAWNER_UPGRADE_CROWD = registerItem("spawner_upgrade_crowd", SpawnerUpgradeCrowdItem::new,
-			new Item.Settings());
-	public static Item SPAWNER_UPGRADE_RANGE = registerItem("spawner_upgrade_range", SpawnerUpgradeRangeItem::new,
-			new Item.Settings());
-	public static Item SPAWNER_UPGRADE_SPEED = registerItem("spawner_upgrade_speed", SpawnerUpgradeSpeedItem::new,
-			new Item.Settings());
+	public static Item SPAWNER_CALIBRATOR = registerItem("spawner_calibrator", new SpawnerCalibratorItem(new Item.Settings().rarity(Rarity.UNCOMMON)));
+	public static Item SPAWNER_IGNITER = registerItem("spawner_igniter", new SpawnerIgniterItem(new Item.Settings().rarity(Rarity.EPIC)));
+	public static Item CURSED_BOTTLE = registerItem("cursed_bottle", new CursedBottleItem(new Item.Settings().maxCount(16).rarity(Rarity.UNCOMMON)));
+	public static Item SOUL_DESINTEGRATOR = registerItem("soul_desintegrator", new SoulDesintegratorItem(new Item.Settings()));
+	public static Item SPAWNER_UPGRADE_REDSTONE = registerItem("spawner_upgrade_redstone", new SpawnerUpgradeRedstoneItem(new Item.Settings()));
+	public static Item SPAWNER_UPGRADE_CROWD = registerItem("spawner_upgrade_crowd", new SpawnerUpgradeCrowdItem(new Item.Settings()));
+	public static Item SPAWNER_UPGRADE_RANGE = registerItem("spawner_upgrade_range", new SpawnerUpgradeRangeItem(new Item.Settings()));
+	public static Item SPAWNER_UPGRADE_SPEED = registerItem("spawner_upgrade_speed", new SpawnerUpgradeSpeedItem(new Item.Settings()));
 
 	public static void initialize() {
 		VanillaSpawnersExpanded.LOGGER.info("ModItems: Initialize");
 		itemGroupRegister();
 	}
 
-	public static Item registerItem(String name, Function<Item.Settings, Item> itemFactory, Item.Settings settings) {
-		// Create the item key.
-		RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM,
-				Identifier.of(VanillaSpawnersExpanded.MOD_ID, name));
+	public static Item registerItem(String id, Item item) {
+		// Create the identifier for the item.
+		Identifier itemID = Identifier.of(VanillaSpawnersExpanded.MOD_ID, id);
 
-		// Create the item instance.
-		Item item = itemFactory.apply(settings.registryKey(itemKey));
-
-		// Register the item.
-		Registry.register(Registries.ITEM, itemKey, item);
-
-		return item;
+		// Return the registered item!
+		return Registry.register(Registries.ITEM, itemID, item);
 	}
 
 	public static void itemGroupRegister() {

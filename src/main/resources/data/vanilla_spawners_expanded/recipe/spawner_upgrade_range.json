@@ -7,9 +7,15 @@
 		"BGB"
 	],
 	"key": {
-		"B": "minecraft:nether_brick",
-		"G": "minecraft:honeycomb",
-		"E": "minecraft:ender_eye"
+		"B": {
+			"item": "minecraft:nether_brick"
+		},
+		"G": {
+			"item": "minecraft:honeycomb"
+		},
+		"E": {
+			"item": "minecraft:ender_eye"
+		}
 	},
 	"result": {
 		"id": "vanilla_spawners_expanded:spawner_upgrade_range",

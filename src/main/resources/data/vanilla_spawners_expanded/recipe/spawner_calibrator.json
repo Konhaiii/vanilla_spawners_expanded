@@ -7,9 +7,15 @@
 		"BAB"
 	],
 	"key": {
-		"B": "minecraft:nether_brick",
-		"A": "minecraft:amethyst_shard",
-		"Q": "minecraft:quartz"
+		"B": {
+			"item": "minecraft:nether_brick"
+		},
+		"A": {
+			"item": "minecraft:amethyst_shard"
+		},
+		"Q": {
+			"item": "minecraft:quartz"
+		}
 	},
 	"result": {
 		"id": "vanilla_spawners_expanded:spawner_calibrator",

@@ -2,16 +2,24 @@ package konhaiii.vanilla_spawners_expanded.block.calibrated_spawner;
 
 import com.mojang.serialization.MapCodec;
 import konhaiii.vanilla_spawners_expanded.block.ModBlocks;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.loot.context.LootWorldContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenTexts;
@@ -19,14 +27,10 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.block.WireOrientation;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,7 +45,7 @@ public class CalibratedSpawnerBlock extends BlockWithEntity {
 	public MapCodec<CalibratedSpawnerBlock> getCodec() {
 		return CODEC;
 	}
-	public CalibratedSpawnerBlock(AbstractBlock.Settings settings) {
+	public CalibratedSpawnerBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState(
 				this.stateManager.getDefaultState().with(POWERED, false)
@@ -60,7 +64,7 @@ public class CalibratedSpawnerBlock extends BlockWithEntity {
 	}
 
 	@Override
-	protected List<ItemStack> getDroppedStacks(BlockState state, LootWorldContext.Builder builder) {
+	protected List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
 		World world = builder.getWorld();
 		RegistryWrapper.WrapperLookup registryManager = world.getRegistryManager();
 		BlockEntity blockEntity = builder.getOptional(LootContextParameters.BLOCK_ENTITY);
@@ -75,7 +79,12 @@ public class CalibratedSpawnerBlock extends BlockWithEntity {
 	}
 
 	@Override
-	public ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	protected BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.MODEL;
+	}
+
+	@Override
+	public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		RegistryWrapper.WrapperLookup registryManager = world.getRegistryManager();
 		assert blockEntity != null;
@@ -141,7 +150,7 @@ public class CalibratedSpawnerBlock extends BlockWithEntity {
 	}
 
 	@Override
-	protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
+	protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
 		boolean bl = world.isReceivingRedstonePower(pos);
 		if (!this.getDefaultState().isOf(sourceBlock) && bl != state.get(POWERED)) {
 

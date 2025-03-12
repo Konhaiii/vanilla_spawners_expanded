@@ -7,10 +7,18 @@
 		"RPR"
 	],
 	"key": {
-		"R": "minecraft:redstone",
-		"G": "minecraft:ghast_tear",
-		"D": "minecraft:dragon_breath",
-		"P": "minecraft:gunpowder"
+		"R": {
+			"item": "minecraft:redstone"
+		},
+		"G": {
+			"item": "minecraft:ghast_tear"
+		},
+		"D": {
+			"item": "minecraft:dragon_breath"
+		},
+		"P": {
+			"item": "minecraft:gunpowder"
+		}
 	},
 	"result": {
 		"id": "vanilla_spawners_expanded:cursed_bottle",

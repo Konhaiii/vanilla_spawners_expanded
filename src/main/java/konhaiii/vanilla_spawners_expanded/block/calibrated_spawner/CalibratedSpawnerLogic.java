@@ -150,7 +150,7 @@ public abstract class CalibratedSpawnerLogic {
 							continue;
 						}
 
-						Entity entity = EntityType.loadEntityWithPassengers(nbtCompound, world, SpawnReason.SPAWNER, entityx -> {
+						Entity entity = EntityType.loadEntityWithPassengers(nbtCompound, world, entityx -> {
 							entityx.refreshPositionAndAngles(d, e, f, entityx.getYaw(), entityx.getPitch());
 							return entityx;
 						});
@@ -308,7 +308,7 @@ public abstract class CalibratedSpawnerLogic {
 				return null;
 			}
 
-			this.renderedEntity = EntityType.loadEntityWithPassengers(nbtCompound, world, SpawnReason.SPAWNER, Function.identity());
+			this.renderedEntity = EntityType.loadEntityWithPassengers(nbtCompound, world, Function.identity());
 			nbtCompound.getSize();
 		}
 

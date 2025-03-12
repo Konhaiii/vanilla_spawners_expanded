@@ -64,13 +64,13 @@ public class SpawnerCalibratorItem extends Item {
 				((ServerWorld) world).spawnParticles(ParticleTypes.WAX_OFF,
 						blockPos.getX()+0.5, blockPos.getY()+0.5, blockPos.getZ()+0.5, 20, 0.6, 0.6, 0.6, 0.05);
 				itemStack.decrement(1);
-				return ActionResult.SUCCESS_SERVER;
+				return ActionResult.SUCCESS;
 			}
 		}
 		return ActionResult.FAIL;
 	}
 	@Override
-	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		tooltip.add(Text.translatable("item.vanilla_spawners_expanded.spawner_calibrator.desc1").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.vanilla_spawners_expanded.spawner_calibrator.desc2").formatted(Formatting.GRAY));
 		super.appendTooltip(stack, context, tooltip, type);
