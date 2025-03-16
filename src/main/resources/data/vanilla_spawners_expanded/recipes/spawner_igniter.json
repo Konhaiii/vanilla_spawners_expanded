@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"BDB",
+		"PNP",
+		"BDB"
+	],
+	"key": {
+		"B": {
+			"item": "minecraft:nether_brick"
+		},
+		"D": {
+			"item": "minecraft:diamond"
+		},
+		"P": {
+			"item": "minecraft:blaze_powder"
+		},
+		"N": {
+			"item": "minecraft:nether_star"
+		}
+	},
+	"result": {
+		"item": "vanilla_spawners_expanded:spawner_igniter",
+		"count": 1
+	}
+}

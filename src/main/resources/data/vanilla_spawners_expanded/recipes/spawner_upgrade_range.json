@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"BGB",
+		"GEG",
+		"BGB"
+	],
+	"key": {
+		"B": {
+			"item": "minecraft:nether_brick"
+		},
+		"G": {
+			"item": "minecraft:honeycomb"
+		},
+		"E": {
+			"item": "minecraft:ender_eye"
+		}
+	},
+	"result": {
+		"item": "vanilla_spawners_expanded:spawner_upgrade_range",
+		"count": 1
+	}
+}

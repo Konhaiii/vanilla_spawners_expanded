@@ -1,0 +1,57 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "vanilla_spawners_expanded:calibrated_spawner",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "IsLit",
+                  "target": "BlockEntityTag.IsLit",
+                  "op": "replace"
+                },
+                {
+                  "source": "HasCrowdUpgrade",
+                  "target": "BlockEntityTag.HasCrowdUpgrade",
+                  "op": "replace"
+                },
+                {
+                  "source": "HasRedstoneUpgrade",
+                  "target": "BlockEntityTag.HasRedstoneUpgrade",
+                  "op": "replace"
+                },
+                {
+                  "source": "HasRangeUpgrade",
+                  "target": "BlockEntityTag.HasRangeUpgrade",
+                  "op": "replace"
+                },
+                {
+                  "source": "HasSpeedUpgrade",
+                  "target": "BlockEntityTag.HasSpeedUpgrade",
+                  "op": "replace"
+                },
+                {
+                  "source": "SpawnData",
+                  "target": "BlockEntityTag.SpawnData",
+                  "op": "replace"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_all_inner_faces",
+  "parent": "minecraft:block/cube_all",
   "textures": {
     "all": "vanilla_spawners_expanded:block/calibrated_spawner"
   }

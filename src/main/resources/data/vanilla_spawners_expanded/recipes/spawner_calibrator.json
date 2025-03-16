@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"BAB",
+		"AQA",
+		"BAB"
+	],
+	"key": {
+		"B": {
+			"item": "minecraft:nether_brick"
+		},
+		"A": {
+			"item": "minecraft:amethyst_shard"
+		},
+		"Q": {
+			"item": "minecraft:quartz"
+		}
+	},
+	"result": {
+		"item": "vanilla_spawners_expanded:spawner_calibrator",
+		"count": 1
+	}
+}

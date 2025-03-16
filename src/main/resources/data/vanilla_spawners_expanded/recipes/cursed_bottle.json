@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"RPR",
+		"GDG",
+		"RPR"
+	],
+	"key": {
+		"R": {
+			"item": "minecraft:redstone"
+		},
+		"G": {
+			"item": "minecraft:ghast_tear"
+		},
+		"D": {
+			"item": "minecraft:dragon_breath"
+		},
+		"P": {
+			"item": "minecraft:gunpowder"
+		}
+	},
+	"result": {
+		"item": "vanilla_spawners_expanded:cursed_bottle",
+		"count": 1
+	}
+}

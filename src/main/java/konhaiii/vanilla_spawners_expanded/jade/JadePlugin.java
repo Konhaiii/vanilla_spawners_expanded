@@ -1,6 +1,7 @@
 package konhaiii.vanilla_spawners_expanded.jade;
 
 import konhaiii.vanilla_spawners_expanded.block.calibrated_spawner.CalibratedSpawnerBlock;
+import konhaiii.vanilla_spawners_expanded.block.calibrated_spawner.CalibratedSpawnerBlockEntity;
 import net.minecraft.util.Identifier;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
@@ -15,7 +16,7 @@ public class JadePlugin implements IWailaPlugin {
 
 	@Override
 	public void register(IWailaCommonRegistration registration) {
-		registration.registerBlockDataProvider(BlockComponentProvider.INSTANCE, CalibratedSpawnerBlock.class);
+		registration.registerBlockDataProvider(BlockComponentProvider.INSTANCE, CalibratedSpawnerBlockEntity.class);
 	}
 
 	@Override

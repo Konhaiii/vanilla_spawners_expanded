@@ -29,7 +29,8 @@ public enum BlockComponentProvider implements IBlockComponentProvider, IServerDa
 					.append(Text.translatable("block.vanilla_spawners_expanded.calibrated_spawner.desc2").formatted(Formatting.GRAY)));
 		}
 		if (accessor.getServerData().contains("Entity")) {
-			Identifier entityIdentifier = Identifier.of(accessor.getServerData().getString("Entity"));
+			Identifier entityIdentifier = Identifier.tryParse(accessor.getServerData().getString("Entity"));
+			assert entityIdentifier != null;
 			tooltip.add(Text.translatable("keyword.vanilla_spawners_expanded.soul_type").formatted(Formatting.GRAY)
 					.append(ScreenTexts.SPACE).append(Text.translatable(entityIdentifier.toTranslationKey("entity")).formatted(Formatting.WHITE)));
 		} else {

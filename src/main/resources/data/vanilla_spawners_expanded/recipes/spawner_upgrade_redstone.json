@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"BRB",
+		"RTR",
+		"BRB"
+	],
+	"key": {
+		"B": {
+			"item": "minecraft:nether_brick"
+		},
+		"R": {
+			"item": "minecraft:redstone"
+		},
+		"T": {
+			"item": "minecraft:tripwire_hook"
+		}
+	},
+	"result": {
+		"item": "vanilla_spawners_expanded:spawner_upgrade_redstone",
+		"count": 1
+	}
+}

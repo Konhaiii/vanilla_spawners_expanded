@@ -2,7 +2,6 @@ package konhaiii.vanilla_spawners_expanded.block.calibrated_spawner;
 
 import konhaiii.vanilla_spawners_expanded.VanillaSpawnersExpanded;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.spawner.MobSpawnerEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -13,16 +12,12 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldEvents;
+import net.minecraft.world.*;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,6 +26,7 @@ import java.util.function.Function;
 
 public abstract class CalibratedSpawnerLogic {
 	private int spawnDelay = 20;
+	private boolean lastWrite = false;
 	private boolean isLit = false;
 	private boolean hasRedstoneUpgrade = false;
 	private boolean hasCrowdUpgrade = false;
@@ -135,7 +131,7 @@ public abstract class CalibratedSpawnerLogic {
 					double d = j >= 1 ? nbtList.getDouble(0) : pos.getX() + (random.nextDouble() - random.nextDouble()) * this.spawnRange + 0.5;
 					double e = j >= 2 ? nbtList.getDouble(1) : pos.getY() + random.nextInt(3) - 1;
 					double f = j >= 3 ? nbtList.getDouble(2) : pos.getZ() + (random.nextDouble() - random.nextDouble()) * this.spawnRange + 0.5;
-					if (world.isSpaceEmpty(optional.get().getSpawnBox(d, e, f))) {
+					if (world.isSpaceEmpty(optional.get().createSimpleBoundingBox(d, e, f))) {
 						BlockPos blockPos = BlockPos.ofFloored(d, e, f);
 						if (mobSpawnerEntry.getCustomSpawnRules().isPresent()) {
 							if (!optional.get().getSpawnGroup().isPeaceful() && world.getDifficulty() == Difficulty.PEACEFUL) {
@@ -143,14 +139,15 @@ public abstract class CalibratedSpawnerLogic {
 							}
 
 							MobSpawnerEntry.CustomSpawnRules customSpawnRules = mobSpawnerEntry.getCustomSpawnRules().get();
-							if (!customSpawnRules.canSpawn(blockPos, world)) {
+							if (!customSpawnRules.blockLightLimit().contains(world.getLightLevel(LightType.BLOCK, blockPos))
+									|| !customSpawnRules.skyLightLimit().contains(world.getLightLevel(LightType.SKY, blockPos))) {
 								continue;
 							}
 						} else if (!SpawnRestriction.canSpawn((EntityType<?>)optional.get(), world, SpawnReason.SPAWNER, blockPos, world.getRandom())) {
 							continue;
 						}
 
-						Entity entity = EntityType.loadEntityWithPassengers(nbtCompound, world, SpawnReason.SPAWNER, entityx -> {
+						Entity entity = EntityType.loadEntityWithPassengers(nbtCompound, world, entityx -> {
 							entityx.refreshPositionAndAngles(d, e, f, entityx.getYaw(), entityx.getPitch());
 							return entityx;
 						});
@@ -159,10 +156,8 @@ public abstract class CalibratedSpawnerLogic {
 							return;
 						}
 
-						int k = world.getEntitiesByType(
-										TypeFilter.equals(entity.getClass()),
-										new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).expand(this.spawnRange),
-										EntityPredicates.EXCEPT_SPECTATOR
+						int k = world.getNonSpectatingEntities(
+										entity.getClass(), new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).expand(this.spawnRange)
 								)
 								.size();
 						if (k >= this.maxNearbyEntities) {
@@ -175,13 +170,12 @@ public abstract class CalibratedSpawnerLogic {
 							if (mobSpawnerEntry.getCustomSpawnRules().isEmpty() && !mobEntity.canSpawn(world, SpawnReason.SPAWNER) || !mobEntity.canSpawn(world)) {
 								continue;
 							}
-
-							boolean bl2 = mobSpawnerEntry.getNbt().getSize() == 1 && mobSpawnerEntry.getNbt().contains("id", NbtElement.STRING_TYPE);
-							if (bl2) {
-								((MobEntity)entity).initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.SPAWNER, null);
+							if (mobSpawnerEntry.getNbt().getSize() == 1) {
+								mobSpawnerEntry.getNbt().contains("id", NbtElement.STRING_TYPE);
 							}
-
-							mobSpawnerEntry.getEquipment().ifPresent(mobEntity::setEquipmentFromTable);
+							if (mobSpawnerEntry.getNbt().getSize() == 1 && mobSpawnerEntry.getNbt().contains("id", NbtElement.STRING_TYPE)) {
+								((MobEntity)entity).initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.SPAWNER, null, null);
+							}
 						}
 
 						if (!world.spawnNewEntityAndPassengers(entity)) {
@@ -246,58 +240,45 @@ public abstract class CalibratedSpawnerLogic {
 		this.renderedEntity = null;
 	}
 
+	public void droppingNbt(boolean clearSpawnEntry) {
+		if (!VanillaSpawnersExpanded.config.calibratedSpawnerStayLitOnBreak) {
+			this.isLit = false;
+		}
+		if (!VanillaSpawnersExpanded.config.calibratedSpawnerKeepMobOnBreak || clearSpawnEntry) {
+			this.spawnEntry = null;
+		}
+		if (!VanillaSpawnersExpanded.config.calibratedSpawnerKeepUpgradesOnBreak) {
+			this.hasCrowdUpgrade = false;
+			this.hasRedstoneUpgrade = false;
+			this.hasRangeUpgrade = false;
+			this.hasSpeedUpgrade = false;
+		}
+		this.lastWrite = true;
+	}
+
 	public void writeNbt(NbtCompound nbt) {
-		nbt.putShort("Delay", (short)this.spawnDelay);
-		nbt.putBoolean("IsLit", this.isLit);
-		nbt.putBoolean("HasRedstoneUpgrade", this.hasRedstoneUpgrade);
-		nbt.putBoolean("HasSpeedUpgrade", this.hasSpeedUpgrade);
-		nbt.putShort("SpawnCount", (short)this.spawnCount);
-		nbt.putBoolean("HasCrowdUpgrade", this.hasCrowdUpgrade);
-		nbt.putBoolean("HasRangeUpgrade", this.hasRangeUpgrade);
-		nbt.putShort("SpawnRange", (short)this.spawnRange);
+		if (this.lastWrite) {
+			if (this.isLit) { nbt.putBoolean("IsLit", true); }
+			if (this.hasRedstoneUpgrade) { nbt.putBoolean("HasRedstoneUpgrade", true); }
+			if (this.hasSpeedUpgrade) { nbt.putBoolean("HasSpeedUpgrade", true); }
+			if (this.hasCrowdUpgrade) { nbt.putBoolean("HasCrowdUpgrade", true); }
+			if (this.hasRangeUpgrade) { nbt.putBoolean("HasRangeUpgrade", true); }
+		} else {
+			nbt.putShort("Delay", (short)this.spawnDelay);
+			nbt.putBoolean("IsLit", this.isLit);
+			nbt.putBoolean("HasRedstoneUpgrade", this.hasRedstoneUpgrade);
+			nbt.putBoolean("HasSpeedUpgrade", this.hasSpeedUpgrade);
+			nbt.putShort("SpawnCount", (short)this.spawnCount);
+			nbt.putBoolean("HasCrowdUpgrade", this.hasCrowdUpgrade);
+			nbt.putBoolean("HasRangeUpgrade", this.hasRangeUpgrade);
+			nbt.putShort("SpawnRange", (short)this.spawnRange);
+		}
 		if (this.spawnEntry != null) {
 			nbt.put(
 					"SpawnData",
-					MobSpawnerEntry.CODEC.encodeStart(NbtOps.INSTANCE, this.spawnEntry).getOrThrow(string -> new IllegalStateException("Invalid SpawnData: " + string))
+					MobSpawnerEntry.CODEC.encodeStart(NbtOps.INSTANCE, this.spawnEntry).result().orElseThrow(() -> new IllegalStateException("Invalid SpawnData"))
 			);
 		}
-	}
-
-	public NbtCompound dropStackNbt(NbtCompound nbt) {
-		if (VanillaSpawnersExpanded.config.calibratedSpawnerKeepUpgradesOnBreak) {
-			nbt.putShort("Delay", (short)this.minSpawnDelay);
-			nbt.putBoolean("HasCrowdUpgrade", this.hasCrowdUpgrade);
-			nbt.putBoolean("HasRangeUpgrade", this.hasRangeUpgrade);
-			nbt.putBoolean("HasSpeedUpgrade", this.hasSpeedUpgrade);
-			nbt.putBoolean("HasRedstoneUpgrade", this.hasRedstoneUpgrade);
-		} else {
-			nbt.putShort("Delay", (short)200);
-			nbt.putBoolean("HasCrowdUpgrade", false);
-			nbt.putBoolean("HasRangeUpgrade", false);
-			nbt.putBoolean("HasSpeedUpgrade", false);
-			nbt.putBoolean("HasRedstoneUpgrade", false);
-		}
-		if (VanillaSpawnersExpanded.config.calibratedSpawnerKeepMobOnBreak) {
-			if (this.spawnEntry != null) {
-				nbt.put(
-						"SpawnData",
-						MobSpawnerEntry.CODEC.encodeStart(NbtOps.INSTANCE, this.spawnEntry).getOrThrow(string -> new IllegalStateException("Invalid SpawnData: " + string))
-				);
-			}
-		} else {
-			NbtCompound nbtSpawnData = new NbtCompound();
-			nbtSpawnData.put("entity", new NbtCompound());
-			nbt.put("SpawnData", nbtSpawnData);
-		}
-		if (VanillaSpawnersExpanded.config.calibratedSpawnerStayLitOnBreak) {
-			nbt.putBoolean("IsLit", this.isLit);
-		} else {
-			nbt.putBoolean("IsLit", false);
-		}
-		nbt.putShort("SpawnCount", (short)this.spawnCount);
-		nbt.putShort("SpawnRange", (short)this.spawnRange);
-		nbt.putString("id", "vanilla_spawners_expanded:calibrated_spawner");
-		return nbt;
 	}
 
 	@Nullable
@@ -308,7 +289,7 @@ public abstract class CalibratedSpawnerLogic {
 				return null;
 			}
 
-			this.renderedEntity = EntityType.loadEntityWithPassengers(nbtCompound, world, SpawnReason.SPAWNER, Function.identity());
+			this.renderedEntity = EntityType.loadEntityWithPassengers(nbtCompound, world, Function.identity());
 			nbtCompound.getSize();
 		}
 
