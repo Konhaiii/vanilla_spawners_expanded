@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_spawner": {
+    "has_calibrated_spawner": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:spawner"
+            "items": "vanilla_spawners_expanded:calibrated_spawner"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_spawner"
+      "has_calibrated_spawner"
     ]
   ],
   "rewards": {
