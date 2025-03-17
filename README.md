@@ -10,6 +10,8 @@ Looking to customize and optimize your spawners in Minecraft? Discover **Vanilla
 
 ## **Features:**
 
+![Every items](https://cdn.modrinth.com/data/cached_images/26a3197d852c302fd69b12f0628ee37781c555e9.png)
+
 **Spawner Calibration:** Use the **Spawner Calibrator** on a vanilla spawner to prepare it for customization. This step is essential to unlock the full potential of your spawners. A calibrated spawner can be mined and collected even without silk touch.
 
 **Soul Capture:** Capture the souls of mobs using the **Cursed Bottle**. Once captured, these souls can be placed into calibrated spawners to define the creatures they generate.
