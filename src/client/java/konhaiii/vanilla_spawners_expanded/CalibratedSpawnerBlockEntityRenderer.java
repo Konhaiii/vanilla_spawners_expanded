@@ -12,6 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
@@ -22,7 +23,7 @@ public class CalibratedSpawnerBlockEntityRenderer implements BlockEntityRenderer
 		this.entityRenderDispatcher = ctx.getEntityRenderDispatcher();
 	}
 
-	public void render(CalibratedSpawnerBlockEntity calibratedSpawnerBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
+	public void render(CalibratedSpawnerBlockEntity calibratedSpawnerBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, Vec3d vec3d) {
 		World world = calibratedSpawnerBlockEntity.getWorld();
 		if (world != null) {
 			CalibratedSpawnerLogic calibratedSpawnerLogic = calibratedSpawnerBlockEntity.getLogic();
@@ -30,6 +31,7 @@ public class CalibratedSpawnerBlockEntityRenderer implements BlockEntityRenderer
 			if (entity != null) {
 				render(f, matrixStack, vertexConsumerProvider, i, entity, this.entityRenderDispatcher, calibratedSpawnerLogic.getLastRotation(), calibratedSpawnerLogic.getRotation());
 			}
+
 		}
 	}
 

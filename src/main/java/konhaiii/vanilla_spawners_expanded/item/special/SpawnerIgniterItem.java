@@ -1,11 +1,10 @@
 package konhaiii.vanilla_spawners_expanded.item.special;
 
-import java.util.List;
-
 import konhaiii.vanilla_spawners_expanded.block.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -22,6 +21,11 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Consumer;
+
 public class SpawnerIgniterItem extends Item {
     public SpawnerIgniterItem(Settings settings) {
         super(settings);
@@ -40,7 +44,7 @@ public class SpawnerIgniterItem extends Item {
             if (blockState.getBlock() == ModBlocks.CALIBRATED_SPAWNER) {
                 assert blockEntity != null;
                 NbtCompound spawnerNbt = blockEntity.createNbt(registryManager);
-                if (!spawnerNbt.getBoolean("IsLit")) {
+                if (Objects.equals(spawnerNbt.getBoolean("IsLit"), Optional.of(false))) {
                     spawnerNbt.putBoolean("IsLit", true);
                     blockEntity.read(spawnerNbt, registryManager);
                     world.updateListeners(blockPos, blockState, blockState, Block.NOTIFY_ALL);
@@ -55,10 +59,13 @@ public class SpawnerIgniterItem extends Item {
         }
         return ActionResult.FAIL;
     }
+    @SuppressWarnings("deprecation")
     @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(Text.translatable("item.vanilla_spawners_expanded.spawner_igniter.desc1").formatted(Formatting.GRAY));
-        tooltip.add(Text.translatable("item.vanilla_spawners_expanded.spawner_igniter.desc2").formatted(Formatting.GRAY));
-        super.appendTooltip(stack, context, tooltip, type);
+    public void appendTooltip(
+            ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type
+    ) {
+        textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.spawner_igniter.desc1").formatted(Formatting.GRAY));
+        textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.spawner_igniter.desc2").formatted(Formatting.GRAY));
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
     }
 }

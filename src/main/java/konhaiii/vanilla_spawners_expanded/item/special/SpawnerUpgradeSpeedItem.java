@@ -1,12 +1,11 @@
 package konhaiii.vanilla_spawners_expanded.item.special;
 
-import java.util.List;
-
 import konhaiii.vanilla_spawners_expanded.VanillaSpawnersExpanded;
 import konhaiii.vanilla_spawners_expanded.block.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -23,6 +22,10 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 public class SpawnerUpgradeSpeedItem extends Item {
     public SpawnerUpgradeSpeedItem(Settings settings) {
@@ -43,7 +46,7 @@ public class SpawnerUpgradeSpeedItem extends Item {
                 assert blockEntity != null;
                 NbtCompound spawnerNbt = blockEntity.createNbt(registryManager);
                 short speedUpgradeMaxValue = (short) VanillaSpawnersExpanded.config.speedUpgradeMaxValue;
-                if (!spawnerNbt.getBoolean("HasSpeedUpgrade")) {
+                if (Objects.equals(spawnerNbt.getBoolean("HasSpeedUpgrade"), Optional.of(false))) {
                     spawnerNbt.putBoolean("HasSpeedUpgrade", true);
                     spawnerNbt.putShort("Delay", speedUpgradeMaxValue);
                     blockEntity.read(spawnerNbt, registryManager);
@@ -59,17 +62,20 @@ public class SpawnerUpgradeSpeedItem extends Item {
         }
         return ActionResult.FAIL;
     }
+    @SuppressWarnings("deprecation")
     @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(Text.translatable("item.vanilla_spawners_expanded.spawner_upgrade_speed.desc1").formatted(Formatting.GRAY));
-        tooltip.add(Text.translatable("item.vanilla_spawners_expanded.spawner_upgrade_speed.desc2",
+    public void appendTooltip(
+            ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type
+    ) {
+        textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.spawner_upgrade_speed.desc1").formatted(Formatting.GRAY));
+        textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.spawner_upgrade_speed.desc2",
                 VanillaSpawnersExpanded.config.speedDefaultMinValue,
                 VanillaSpawnersExpanded.config.speedUpgradeMinValue)
                 .formatted(Formatting.GRAY));
-        tooltip.add(Text.translatable("item.vanilla_spawners_expanded.spawner_upgrade_speed.desc3",
+        textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.spawner_upgrade_speed.desc3",
                         VanillaSpawnersExpanded.config.speedDefaultMaxValue,
                         VanillaSpawnersExpanded.config.speedUpgradeMaxValue)
                 .formatted(Formatting.GRAY));
-        super.appendTooltip(stack, context, tooltip, type);
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
     }
 }

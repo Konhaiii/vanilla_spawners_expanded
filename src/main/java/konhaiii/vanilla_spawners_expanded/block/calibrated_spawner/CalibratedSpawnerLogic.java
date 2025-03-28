@@ -9,8 +9,6 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
@@ -19,6 +17,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -97,9 +96,9 @@ public abstract class CalibratedSpawnerLogic {
 			double d = pos.getX() + random.nextDouble();
 			double e = pos.getY() + random.nextDouble();
 			double f = pos.getZ() + random.nextDouble();
-			world.addParticle(ParticleTypes.SMOKE, d, e, f, 0.0, 0.0, 0.0);
+			world.addParticleClient(ParticleTypes.SMOKE, d, e, f, 0.0, 0.0, 0.0);
 			if (!this.hasRedstoneUpgrade || !blockstate.get(CalibratedSpawnerBlock.POWERED)) {
-				world.addParticle(ParticleTypes.FLAME, d, e, f, 0.0, 0.0, 0.0);
+				world.addParticleClient(ParticleTypes.FLAME, d, e, f, 0.0, 0.0, 0.0);
 			}
 		}
 	}
@@ -130,13 +129,16 @@ public abstract class CalibratedSpawnerLogic {
 						return;
 					}
 
-					NbtList nbtList = nbtCompound.getList("Pos", NbtElement.DOUBLE_TYPE);
-					int j = nbtList.size();
-					double d = j >= 1 ? nbtList.getDouble(0) : pos.getX() + (random.nextDouble() - random.nextDouble()) * this.spawnRange + 0.5;
-					double e = j >= 2 ? nbtList.getDouble(1) : pos.getY() + random.nextInt(3) - 1;
-					double f = j >= 3 ? nbtList.getDouble(2) : pos.getZ() + (random.nextDouble() - random.nextDouble()) * this.spawnRange + 0.5;
-					if (world.isSpaceEmpty(optional.get().getSpawnBox(d, e, f))) {
-						BlockPos blockPos = BlockPos.ofFloored(d, e, f);
+					Vec3d vec3d = nbtCompound.get("Pos", Vec3d.CODEC)
+							.orElseGet(
+									() -> new Vec3d(
+											pos.getX() + (random.nextDouble() - random.nextDouble()) * this.spawnRange + 0.5,
+											pos.getY() + random.nextInt(3) - 1,
+											pos.getZ() + (random.nextDouble() - random.nextDouble()) * this.spawnRange + 0.5
+									)
+							);
+					if (world.isSpaceEmpty(optional.get().getSpawnBox(vec3d.x, vec3d.y, vec3d.z))) {
+						BlockPos blockPos = BlockPos.ofFloored(vec3d);
 						if (mobSpawnerEntry.getCustomSpawnRules().isPresent()) {
 							if (!optional.get().getSpawnGroup().isPeaceful() && world.getDifficulty() == Difficulty.PEACEFUL) {
 								continue;
@@ -151,7 +153,7 @@ public abstract class CalibratedSpawnerLogic {
 						}
 
 						Entity entity = EntityType.loadEntityWithPassengers(nbtCompound, world, SpawnReason.SPAWNER, entityx -> {
-							entityx.refreshPositionAndAngles(d, e, f, entityx.getYaw(), entityx.getPitch());
+							entityx.refreshPositionAndAngles(vec3d.x, vec3d.y, vec3d.z, entityx.getYaw(), entityx.getPitch());
 							return entityx;
 						});
 						if (entity == null) {
@@ -159,13 +161,13 @@ public abstract class CalibratedSpawnerLogic {
 							return;
 						}
 
-						int k = world.getEntitiesByType(
+						int j = world.getEntitiesByType(
 										TypeFilter.equals(entity.getClass()),
 										new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).expand(this.spawnRange),
 										EntityPredicates.EXCEPT_SPECTATOR
 								)
 								.size();
-						if (k >= this.maxNearbyEntities) {
+						if (j >= this.maxNearbyEntities) {
 							this.updateSpawns(world, pos);
 							return;
 						}
@@ -176,7 +178,7 @@ public abstract class CalibratedSpawnerLogic {
 								continue;
 							}
 
-							boolean bl2 = mobSpawnerEntry.getNbt().getSize() == 1 && mobSpawnerEntry.getNbt().contains("id", NbtElement.STRING_TYPE);
+							boolean bl2 = mobSpawnerEntry.getNbt().getSize() == 1 && mobSpawnerEntry.getNbt().getString("id").isPresent();
 							if (bl2) {
 								((MobEntity)entity).initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.SPAWNER, null);
 							}
@@ -217,30 +219,23 @@ public abstract class CalibratedSpawnerLogic {
 	}
 
 	public void readNbt(@Nullable World world, BlockPos pos, NbtCompound nbt) {
-		this.spawnDelay = nbt.getShort("Delay");
-		this.isLit = nbt.getBoolean("IsLit");
-		this.hasRedstoneUpgrade = nbt.getBoolean("HasRedstoneUpgrade");
-		boolean bl = nbt.contains("SpawnData", NbtElement.COMPOUND_TYPE);
-		if (bl) {
-			MobSpawnerEntry mobSpawnerEntry = MobSpawnerEntry.CODEC
-					.parse(NbtOps.INSTANCE, nbt.getCompound("SpawnData"))
-					.resultOrPartial(string -> VanillaSpawnersExpanded.LOGGER.warn("Invalid SpawnData: {}", string))
-					.orElseGet(MobSpawnerEntry::new);
-			this.setSpawnEntry(world, pos, mobSpawnerEntry);
+		this.spawnDelay = nbt.getShort("Delay").orElse((short)spawnDelay);
+		this.isLit = nbt.getBoolean("IsLit").orElse(isLit);
+		this.hasRedstoneUpgrade = nbt.getBoolean("HasRedstoneUpgrade").orElse(hasRedstoneUpgrade);
+		nbt.get("SpawnData", MobSpawnerEntry.CODEC).ifPresent(mobSpawnerEntry -> this.setSpawnEntry(world, pos, mobSpawnerEntry));
+
+		if (nbt.contains("HasSpeedUpgrade")) {
+			this.hasSpeedUpgrade = nbt.getBoolean("HasSpeedUpgrade").orElse(hasSpeedUpgrade);
+			this.spawnCount = nbt.getShort("SpawnCount").orElse((short)spawnCount);
 		}
 
-		if (nbt.contains("HasSpeedUpgrade", NbtElement.NUMBER_TYPE)) {
-			this.hasSpeedUpgrade = nbt.getBoolean("HasSpeedUpgrade");
-			this.spawnCount = nbt.getShort("SpawnCount");
+		if (nbt.contains("HasCrowdUpgrade")) {
+			this.hasCrowdUpgrade = nbt.getBoolean("HasCrowdUpgrade").orElse(hasCrowdUpgrade);
+			this.hasRangeUpgrade = nbt.getBoolean("HasRangeUpgrade").orElse(hasRangeUpgrade);
 		}
 
-		if (nbt.contains("HasCrowdUpgrade", NbtElement.NUMBER_TYPE)) {
-			this.hasCrowdUpgrade = nbt.getBoolean("HasCrowdUpgrade");
-			this.hasRangeUpgrade = nbt.getBoolean("HasRangeUpgrade");
-		}
-
-		if (nbt.contains("SpawnRange", NbtElement.NUMBER_TYPE)) {
-			this.spawnRange = nbt.getShort("SpawnRange");
+		if (nbt.contains("SpawnRange")) {
+			this.spawnRange = nbt.getShort("SpawnRange").orElse((short)spawnRange);
 		}
 
 		this.renderedEntity = null;
@@ -304,7 +299,7 @@ public abstract class CalibratedSpawnerLogic {
 	public Entity getRenderedEntity(World world, BlockPos pos) {
 		if (this.renderedEntity == null) {
 			NbtCompound nbtCompound = this.getSpawnEntry(world, world.getRandom(), pos).getNbt();
-			if (!nbtCompound.contains("id", NbtElement.STRING_TYPE)) {
+			if (!nbtCompound.contains("id")) {
 				return null;
 			}
 

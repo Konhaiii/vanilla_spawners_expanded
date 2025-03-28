@@ -1,8 +1,5 @@
 package konhaiii.vanilla_spawners_expanded.item.special;
 
-import java.util.List;
-import java.util.Objects;
-
 import konhaiii.vanilla_spawners_expanded.VanillaSpawnersExpanded;
 import konhaiii.vanilla_spawners_expanded.block.ModBlocks;
 import konhaiii.vanilla_spawners_expanded.item.ModItems;
@@ -11,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,14 +22,13 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class CursedBottleItem extends Item {
 	public CursedBottleItem(Settings settings) {
@@ -93,12 +90,12 @@ public class CursedBottleItem extends Item {
 			if (blockState.getBlock() == ModBlocks.CALIBRATED_SPAWNER && !nbtComponent.isEmpty()) {
 				assert blockEntity != null;
 				NbtCompound spawnerNbt = blockEntity.createNbt(registryManager);
-				if (!spawnerNbt.getCompound("SpawnData").getCompound("entity").contains("id")) {
-					spawnerNbt.getCompound("SpawnData").getCompound("entity").putString("id",
+				if (!spawnerNbt.getCompound("SpawnData").orElse(new NbtCompound()).getCompound("entity").orElse(new NbtCompound()).contains("id")) {
+					spawnerNbt.getCompound("SpawnData").orElse(new NbtCompound()).getCompound("entity").orElse(new NbtCompound()).putString("id",
 							Objects.requireNonNull(nbtComponent.getId()).toString());
 					short speedUpgradeMaxValue = (short) VanillaSpawnersExpanded.config.speedUpgradeMaxValue;
 					short speedDefaultMaxValue = (short) VanillaSpawnersExpanded.config.speedDefaultMaxValue;
-					if (spawnerNbt.getBoolean("HasSpeedUpgrade")) {
+					if (spawnerNbt.getBoolean("HasSpeedUpgrade").orElse(false)) {
 						spawnerNbt.putShort("Delay", speedUpgradeMaxValue);
 					} else {
 						spawnerNbt.putShort("Delay", speedDefaultMaxValue);
@@ -124,19 +121,22 @@ public class CursedBottleItem extends Item {
 		}
 		return ActionResult.FAIL;
 	}
+	@SuppressWarnings("deprecation")
 	@Override
-	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+	public void appendTooltip(
+			ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type
+	) {
 		NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.ENTITY_DATA, NbtComponent.DEFAULT);
 		if (!nbtComponent.isEmpty()) {
-			tooltip.add(Text.translatable("keyword.vanilla_spawners_expanded.soul_type").formatted(Formatting.GRAY).append(ScreenTexts.SPACE)
+			textConsumer.accept(Text.translatable("keyword.vanilla_spawners_expanded.soul_type").formatted(Formatting.GRAY).append(ScreenTexts.SPACE)
 					.append(Text.translatable(Objects.requireNonNull(nbtComponent.getId()).toTranslationKey("entity")).formatted(Formatting.WHITE)));
-			tooltip.add(ScreenTexts.EMPTY);
-			tooltip.add(Text.translatable("item.vanilla_spawners_expanded.cursed_bottle.desc3").formatted(Formatting.GRAY));
-			tooltip.add(Text.translatable("item.vanilla_spawners_expanded.cursed_bottle.desc4").formatted(Formatting.GRAY));
+			textConsumer.accept(ScreenTexts.EMPTY);
+			textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.cursed_bottle.desc3").formatted(Formatting.GRAY));
+			textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.cursed_bottle.desc4").formatted(Formatting.GRAY));
 		} else {
-			tooltip.add(Text.translatable("item.vanilla_spawners_expanded.cursed_bottle.desc1").formatted(Formatting.GRAY));
-			tooltip.add(Text.translatable("item.vanilla_spawners_expanded.cursed_bottle.desc2").formatted(Formatting.GRAY));
+			textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.cursed_bottle.desc1").formatted(Formatting.GRAY));
+			textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.cursed_bottle.desc2").formatted(Formatting.GRAY));
 		}
-		super.appendTooltip(stack, context, tooltip, type);
+		super.appendTooltip(stack, context, displayComponent, textConsumer, type);
 	}
 }

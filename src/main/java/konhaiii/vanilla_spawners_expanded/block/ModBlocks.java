@@ -1,9 +1,10 @@
 package konhaiii.vanilla_spawners_expanded.block;
 
 import konhaiii.vanilla_spawners_expanded.VanillaSpawnersExpanded;
-import konhaiii.vanilla_spawners_expanded.block.calibrated_spawner.CalibratedSpawnerBlockEntity;
 import konhaiii.vanilla_spawners_expanded.block.calibrated_spawner.CalibratedSpawnerBlock;
+import konhaiii.vanilla_spawners_expanded.block.calibrated_spawner.CalibratedSpawnerBlockEntity;
 import konhaiii.vanilla_spawners_expanded.item.ModItems;
+import konhaiii.vanilla_spawners_expanded.item.special.CalibratedSpawnerItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
@@ -44,7 +45,7 @@ public class ModBlocks {
 		Block block = blockFactory.apply(settings.registryKey(blockKey));
 		RegistryKey<Item> itemKey = keyOfItem();
 
-		BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey).rarity(Rarity.EPIC).component(DataComponentTypes.BLOCK_ENTITY_DATA, CalibratedSpawnerBlockEntity.getDefaultComponent()));
+		BlockItem blockItem = new CalibratedSpawnerItem(block, new Item.Settings().registryKey(itemKey).rarity(Rarity.EPIC).component(DataComponentTypes.BLOCK_ENTITY_DATA, CalibratedSpawnerBlockEntity.getDefaultComponent()));
 		Registry.register(Registries.ITEM, itemKey, blockItem);
 
 		return Registry.register(Registries.BLOCK, blockKey, block);

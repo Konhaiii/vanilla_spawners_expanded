@@ -1,11 +1,10 @@
 package konhaiii.vanilla_spawners_expanded.item.special;
 
-import java.util.List;
-
 import konhaiii.vanilla_spawners_expanded.block.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -22,6 +21,8 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+
+import java.util.function.Consumer;
 
 public class SoulDesintegratorItem extends Item {
     public SoulDesintegratorItem(Settings settings) {
@@ -41,9 +42,9 @@ public class SoulDesintegratorItem extends Item {
             if (blockState.getBlock() == ModBlocks.CALIBRATED_SPAWNER) {
                 assert blockEntity != null;
                 NbtCompound spawnerNbt = blockEntity.createNbt(registryManager);
-                NbtCompound entity = spawnerNbt.getCompound("SpawnData").getCompound("entity");
+                NbtCompound entity = spawnerNbt.getCompound("SpawnData").orElse(new NbtCompound()).getCompound("entity").orElse(new NbtCompound());
                 if (entity.contains("id")) {
-                    spawnerNbt.getCompound("SpawnData").getCompound("entity").remove("id");
+                    spawnerNbt.getCompound("SpawnData").orElse(new NbtCompound()).getCompound("entity").orElse(new NbtCompound()).remove("id");
                     blockEntity.read(spawnerNbt, registryManager);
                     world.updateListeners(blockPos, blockState, blockState, Block.NOTIFY_ALL);
                     world.emitGameEvent(context.getPlayer(), GameEvent.BLOCK_CHANGE, blockPos);
@@ -57,10 +58,13 @@ public class SoulDesintegratorItem extends Item {
         }
         return ActionResult.FAIL;
     }
+    @SuppressWarnings("deprecation")
     @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(Text.translatable("item.vanilla_spawners_expanded.soul_desintegrator.desc1").formatted(Formatting.GRAY));
-        tooltip.add(Text.translatable("item.vanilla_spawners_expanded.soul_desintegrator.desc2").formatted(Formatting.GRAY));
-        super.appendTooltip(stack, context, tooltip, type);
+    public void appendTooltip(
+            ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type
+    ) {
+        textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.soul_desintegrator.desc1").formatted(Formatting.GRAY));
+        textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.soul_desintegrator.desc2").formatted(Formatting.GRAY));
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
     }
 }
