@@ -1,6 +1,7 @@
 package konhaiii.vanilla_spawners_expanded.block.calibrated_spawner;
 
 import konhaiii.vanilla_spawners_expanded.VanillaSpawnersExpanded;
+import konhaiii.vanilla_spawners_expanded.block.ModBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.spawner.MobSpawnerEntry;
 import net.minecraft.entity.Entity;
@@ -80,6 +81,9 @@ public abstract class CalibratedSpawnerLogic {
 	public void clientTick(World world, BlockPos pos) {
 		setUpgradeValues();
 		BlockState blockstate = world.getBlockState(pos);
+		if (!blockstate.isOf(ModBlocks.CALIBRATED_SPAWNER)) {
+			return;
+		}
 		if (!this.isPlayerInRange(world, pos) || !this.isLit || (this.hasRedstoneUpgrade && blockstate.get(CalibratedSpawnerBlock.POWERED))) {
 			this.lastRotation = this.rotation;
 		} else {
