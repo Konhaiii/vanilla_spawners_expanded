@@ -23,7 +23,8 @@
 			"konhaiii.vanilla_spawners_expanded.VanillaSpawnersExpandedClient"
 		],
 		"jade": [
-			"konhaiii.vanilla_spawners_expanded.jade.JadePlugin"
+			"konhaiii.vanilla_spawners_expanded.jade.JadePlugin",
+			"konhaiii.vanilla_spawners_expanded.jade.JadeClientPlugin"
 		]
 	},
 	"mixins": [
@@ -34,12 +35,9 @@
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.16.10",
-		"minecraft": "~1.21.5",
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.11",
 		"java": ">=21",
 		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }

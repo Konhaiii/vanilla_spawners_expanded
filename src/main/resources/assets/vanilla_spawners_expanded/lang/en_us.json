@@ -47,5 +47,5 @@
 
     "itemGroup.vanilla_spawners_expanded": "Vanilla Spawners Expanded",
 
-    "config.jade.plugin_debug.calibrated_spawner": "Debug Calibrated Spawner"
+    "config.jade.plugin_vanilla_spawners_expanded.calibrated_spawner": "Vanilla Spawners Expanded - Calibrated Spawner"
 }
