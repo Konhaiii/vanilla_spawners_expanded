@@ -1,9 +1,8 @@
-package konhaiii.vanilla_spawners_expanded.config;
+package konhaiii.vanilla_spawners_expanded;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import konhaiii.vanilla_spawners_expanded.VanillaSpawnersExpanded;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -41,21 +40,21 @@ public class ModConfigs {
 		mob_blacklist.add("minecraft:cat");
 		mob_blacklist.add("minecraft:chicken");
 		mob_blacklist.add("minecraft:cod");
+		mob_blacklist.add("minecraft:copper_golem");
 		mob_blacklist.add("minecraft:cow");
 		mob_blacklist.add("minecraft:donkey");
 		mob_blacklist.add("minecraft:frog");
 		mob_blacklist.add("minecraft:glow_squid");
+		mob_blacklist.add("minecraft:happy_ghast");
 		mob_blacklist.add("minecraft:horse");
 		mob_blacklist.add("minecraft:mooshroom");
 		mob_blacklist.add("minecraft:mule");
 		mob_blacklist.add("minecraft:ocelot");
 		mob_blacklist.add("minecraft:parrot");
 		mob_blacklist.add("minecraft:pig");
-		mob_blacklist.add("minecraft:pufferfish");
 		mob_blacklist.add("minecraft:rabbit");
 		mob_blacklist.add("minecraft:salmon");
 		mob_blacklist.add("minecraft:sheep");
-		mob_blacklist.add("minecraft:skeleton_horse");
 		mob_blacklist.add("minecraft:sniffer");
 		mob_blacklist.add("minecraft:snowgolem");
 		mob_blacklist.add("minecraft:squid");
@@ -66,6 +65,10 @@ public class ModConfigs {
 		mob_blacklist.add("minecraft:villager");
 		mob_blacklist.add("minecraft:wandering_trader");
 
+		mob_blacklist.add("minecraft:camel_husk");
+		mob_blacklist.add("minecraft:skeleton_horse");
+		mob_blacklist.add("minecraft:zombie_horse");
+
 		mob_blacklist.add("minecraft:bee");
 //		mob_blacklist.add("minecraft:cave_spider");
 		mob_blacklist.add("minecraft:dolphin");
@@ -75,12 +78,15 @@ public class ModConfigs {
 		mob_blacklist.add("minecraft:goat");
 		mob_blacklist.add("minecraft:iron_golem");
 		mob_blacklist.add("minecraft:llama");
+		mob_blacklist.add("minecraft:nautilus");
 		mob_blacklist.add("minecraft:panda");
 		mob_blacklist.add("minecraft:piglin");
 		mob_blacklist.add("minecraft:polar_bear");
+		mob_blacklist.add("minecraft:pufferfish");
 //		mob_blacklist.add("minecraft:spider");
 		mob_blacklist.add("minecraft:trader_llama");
 		mob_blacklist.add("minecraft:wolf");
+		mob_blacklist.add("minecraft:zombie_nautilus");
 //		mob_blacklist.add("minecraft:zombified_piglin");
 
 //		mob_blacklist.add("minecraft:blaze");
@@ -96,6 +102,7 @@ public class ModConfigs {
 //		mob_blacklist.add("minecraft:hoglin");
 //		mob_blacklist.add("minecraft:husk");
 //		mob_blacklist.add("minecraft:magma_cube");
+//		mob_blacklist.add("minecraft:parched");
 		mob_blacklist.add("minecraft:phantom");
 		mob_blacklist.add("minecraft:piglin_brute");
 		mob_blacklist.add("minecraft:pillager");
@@ -118,7 +125,6 @@ public class ModConfigs {
 		mob_blacklist.add("minecraft:wither");
 
 		mob_blacklist.add("minecraft:illusioner");
-		mob_blacklist.add("minecraft:zombie_horse");
 	}
 	public static ModConfigs loadConfig() {
 		if (!Files.exists(CONFIG_PATH)) {

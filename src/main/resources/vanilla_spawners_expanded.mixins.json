@@ -1,12 +1,15 @@
 {
 	"required": true,
 	"package": "konhaiii.vanilla_spawners_expanded.mixin",
-	"compatibilityLevel": "JAVA_21",
+	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"ExampleMixin",
-		"MobEntityMixin"
+		"MobMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
 	}
 }

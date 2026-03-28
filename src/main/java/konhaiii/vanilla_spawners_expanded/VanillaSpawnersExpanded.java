@@ -1,13 +1,8 @@
 package konhaiii.vanilla_spawners_expanded;
 
-import konhaiii.vanilla_spawners_expanded.block.ModBlocks;
-import konhaiii.vanilla_spawners_expanded.config.ModConfigs;
 import net.fabricmc.api.ModInitializer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import konhaiii.vanilla_spawners_expanded.item.ModItems;
 
 public class VanillaSpawnersExpanded implements ModInitializer {
 	public static final String MOD_ID = "vanilla_spawners_expanded";
@@ -24,7 +19,7 @@ public class VanillaSpawnersExpanded implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Vanilla Spawners Expanded: Initialize");
+		LOGGER.info("Hello Fabric world!");
 		config = ModConfigs.loadConfig();
 		ModItems.initialize();
 		ModBlocks.initialize();
