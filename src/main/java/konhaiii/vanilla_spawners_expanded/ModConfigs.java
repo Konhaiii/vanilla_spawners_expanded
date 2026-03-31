@@ -23,6 +23,7 @@ public class ModConfigs {
 	public boolean calibratedSpawnerKeepMobOnBreak = true;
 	public boolean calibratedSpawnerKeepUpgradesOnBreak = true;
 	public boolean cursedBottleIsReusable = false;
+	public boolean addToLootTables = true;
 	public int crowdUpgradeValue = 18;
 	public int rangeUpgradeValue = 64;
 	public int speedUpgradeMaxValue = 400;
@@ -31,6 +32,7 @@ public class ModConfigs {
 	public int rangeDefaultValue = 16;
 	public int speedDefaultMaxValue = 800;
 	public int speedDefaultMinValue = 200;
+
 	public ModConfigs() {
 		mob_blacklist.add("minecraft:allay");
 		mob_blacklist.add("minecraft:armadillo");
