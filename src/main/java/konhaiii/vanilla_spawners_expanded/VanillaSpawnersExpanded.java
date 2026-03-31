@@ -22,6 +22,7 @@ public class VanillaSpawnersExpanded implements ModInitializer {
 
 		LOGGER.info("Hello Fabric world!");
 		config = ModConfigs.loadConfig();
+		ModLootTables.modifyLootTables();
 		ModItems.initialize();
 		ModBlocks.initialize();
 	}
