@@ -184,7 +184,7 @@ public abstract class CalibratedSpawnerLogic {
 
 							boolean bl2 = mobSpawnerEntry.getNbt().getSize() == 1 && mobSpawnerEntry.getNbt().getString("id").isPresent();
 							if (bl2) {
-								((MobEntity)entity).initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.SPAWNER, null);
+								mobEntity.initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.SPAWNER, null);
 							}
 
 							mobSpawnerEntry.getEquipment().ifPresent(mobEntity::setEquipmentFromTable);

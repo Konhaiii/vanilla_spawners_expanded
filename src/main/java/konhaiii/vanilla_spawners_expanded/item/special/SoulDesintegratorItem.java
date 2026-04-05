@@ -61,7 +61,7 @@ public class SoulDesintegratorItem extends Item {
     @SuppressWarnings("deprecation")
     @Override
     public void appendTooltip(
-            ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type
+            ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type
     ) {
         textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.soul_desintegrator.desc1").formatted(Formatting.GRAY));
         textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.soul_desintegrator.desc2").formatted(Formatting.GRAY));

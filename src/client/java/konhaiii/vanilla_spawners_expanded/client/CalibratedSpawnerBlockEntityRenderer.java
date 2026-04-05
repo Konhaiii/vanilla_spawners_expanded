@@ -1,4 +1,4 @@
-package konhaiii.vanilla_spawners_expanded;
+package konhaiii.vanilla_spawners_expanded.client;
 
 import konhaiii.vanilla_spawners_expanded.block.calibrated_spawner.CalibratedSpawnerBlockEntity;
 import konhaiii.vanilla_spawners_expanded.block.calibrated_spawner.CalibratedSpawnerLogic;

@@ -124,7 +124,7 @@ public class CursedBottleItem extends Item {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void appendTooltip(
-			ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type
+			ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type
 	) {
 		NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.ENTITY_DATA, NbtComponent.DEFAULT);
 		if (!nbtComponent.isEmpty()) {

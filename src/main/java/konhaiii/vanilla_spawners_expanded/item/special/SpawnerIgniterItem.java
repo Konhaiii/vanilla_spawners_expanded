@@ -62,7 +62,7 @@ public class SpawnerIgniterItem extends Item {
     @SuppressWarnings("deprecation")
     @Override
     public void appendTooltip(
-            ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type
+            ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type
     ) {
         textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.spawner_igniter.desc1").formatted(Formatting.GRAY));
         textConsumer.accept(Text.translatable("item.vanilla_spawners_expanded.spawner_igniter.desc2").formatted(Formatting.GRAY));

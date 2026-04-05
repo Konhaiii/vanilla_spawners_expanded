@@ -3,6 +3,7 @@ package konhaiii.vanilla_spawners_expanded;
 import konhaiii.vanilla_spawners_expanded.block.ModBlocks;
 import konhaiii.vanilla_spawners_expanded.config.ModConfigs;
 import konhaiii.vanilla_spawners_expanded.item.ModItems;
+import konhaiii.vanilla_spawners_expanded.loot_table.ModLootTables;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ public class VanillaSpawnersExpanded implements ModInitializer {
 
 		LOGGER.info("Vanilla Spawners Expanded: Initialize");
 		config = ModConfigs.loadConfig();
+		ModLootTables.modifyLootTables();
 		ModItems.initialize();
 		ModBlocks.initialize();
 	}
