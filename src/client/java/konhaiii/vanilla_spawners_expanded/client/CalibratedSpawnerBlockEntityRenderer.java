@@ -1,7 +1,7 @@
 /*
  * Decompiled with CFR 0.2.2 (FabricMC 7c48b8c4).
  */
-package konhaiii.vanilla_spawners_expanded;
+package konhaiii.vanilla_spawners_expanded.client;
 
 import konhaiii.vanilla_spawners_expanded.block.calibrated_spawner.CalibratedSpawnerBlockEntity;
 import konhaiii.vanilla_spawners_expanded.block.calibrated_spawner.CalibratedSpawnerLogic;
