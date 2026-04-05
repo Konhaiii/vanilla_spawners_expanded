@@ -1,11 +1,12 @@
 {
 	"required": true,
-	"package": "konhaiii.vanilla_spawners_expanded.mixin.client",
+	"package": "konhaiii.vanilla_spawners_expanded.client.mixin",
 	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"ExampleClientMixin"
-	],
+	"client": [],
 	"injectors": {
 		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
 	}
 }

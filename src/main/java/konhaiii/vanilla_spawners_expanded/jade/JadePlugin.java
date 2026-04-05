@@ -11,7 +11,6 @@ import snownee.jade.api.WailaPlugin;
 public class JadePlugin implements IWailaPlugin {
 
 	public static final Identifier UID_ENTITY = Identifier.tryParse("debug:calibrated_spawner");
-	private static IWailaClientRegistration client;
 
 	@Override
 	public void register(IWailaCommonRegistration registration) {
@@ -20,7 +19,6 @@ public class JadePlugin implements IWailaPlugin {
 
 	@Override
 	public void registerClient(IWailaClientRegistration registration) {
-		JadePlugin.client = registration;
 		registration.registerBlockComponent(BlockComponentProvider.INSTANCE, CalibratedSpawnerBlock.class);
 	}
 }
