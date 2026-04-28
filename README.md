@@ -38,6 +38,7 @@ The mod comes with a JSON configuration file that allows you to customize variou
 - **`calibratedSpawnerKeepMobOnBreak`**: If true, calibrated spawners will retain their mob type when broken.
 - **`calibratedSpawnerKeepUpgradesOnBreak`**: If true, calibrated spawners will keep their upgrades when broken.
 - **`cursedBottleIsReusable`**: If true, cursed bottles will be reusable.
+- **`addToLootTables`**: If true, some items from the mod will be added to some treasure chests.
 - **`crowdUpgradeValue`**: Maximum number of nearby mobs allowed for the spawner to function with the Crowd Upgrade.
 - **`rangeUpgradeValue`**: Range within which the spawner will function with the Range Upgrade.
 - **`speedUpgradeMinValue`**: Minimum delay (in ticks) between spawn cycles with the Speed Upgrade.
