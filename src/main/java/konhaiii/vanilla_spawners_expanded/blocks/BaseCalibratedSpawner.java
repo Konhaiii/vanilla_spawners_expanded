@@ -181,7 +181,7 @@ public abstract class BaseCalibratedSpawner {
 
 								boolean bl2 = spawnData.getEntityToSpawn().size() == 1 && spawnData.getEntityToSpawn().getString("id").isPresent();
 								if (bl2) {
-									((Mob)entity).finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.SPAWNER, null);
+									mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.SPAWNER, null);
 								}
 
 								spawnData.getEquipment().ifPresent(mob::equip);

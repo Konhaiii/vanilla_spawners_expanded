@@ -15,6 +15,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class CalibratedSpawnerBlockEntityRenderer implements BlockEntityRenderer<@NotNull CalibratedSpawnerBlockEntity, @NotNull SpawnerRenderState> {
@@ -24,13 +25,13 @@ public class CalibratedSpawnerBlockEntityRenderer implements BlockEntityRenderer
 		this.entityRenderer = context.entityRenderer();
 	}
 
-	public SpawnerRenderState createRenderState() {
+	public @NonNull SpawnerRenderState createRenderState() {
 		return new SpawnerRenderState();
 	}
 
 	public void extractRenderState(
-			final CalibratedSpawnerBlockEntity blockEntity,
-			final SpawnerRenderState state,
+			final @NonNull CalibratedSpawnerBlockEntity blockEntity,
+			final @NonNull SpawnerRenderState state,
 			final float partialTicks,
 			final @NotNull Vec3 cameraPosition,
 			final ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress
