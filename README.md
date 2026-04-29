@@ -10,6 +10,8 @@ Looking to customize and optimize your spawners in Minecraft? Discover **Vanilla
 
 ## **Features:**
 
+![Every items](https://cdn.modrinth.com/data/cached_images/26a3197d852c302fd69b12f0628ee37781c555e9.png)
+
 **Spawner Calibration:** Use the **Spawner Calibrator** on a vanilla spawner to prepare it for customization. This step is essential to unlock the full potential of your spawners. A calibrated spawner can be mined and collected even without silk touch.
 
 **Soul Capture:** Capture the souls of mobs using the **Cursed Bottle**. Once captured, these souls can be placed into calibrated spawners to define the creatures they generate.
@@ -36,6 +38,7 @@ The mod comes with a JSON configuration file that allows you to customize variou
 - **`calibratedSpawnerKeepMobOnBreak`**: If true, calibrated spawners will retain their mob type when broken.
 - **`calibratedSpawnerKeepUpgradesOnBreak`**: If true, calibrated spawners will keep their upgrades when broken.
 - **`cursedBottleIsReusable`**: If true, cursed bottles will be reusable.
+- **`addToLootTables`**: If true, some items from the mod will be added to some treasure chests.
 - **`crowdUpgradeValue`**: Maximum number of nearby mobs allowed for the spawner to function with the Crowd Upgrade.
 - **`rangeUpgradeValue`**: Range within which the spawner will function with the Range Upgrade.
 - **`speedUpgradeMinValue`**: Minimum delay (in ticks) between spawn cycles with the Speed Upgrade.
@@ -44,5 +47,7 @@ The mod comes with a JSON configuration file that allows you to customize variou
 - **`rangeDefaultValue`**: Range within which the spawner will function by default (without the range upgrade).
 - **`speedDefaultMinValue`**: Minimum delay (in ticks) between spawn cycles by default (without the speed upgrade).
 - **`speedDefaultMaxValue`**: Maximum delay (in ticks) between spawn cycles by default (without the speed upgrade).
+- **`addToLootTables`**: If true, some items from the mod will be added to some treasure chests.
+- **`lootTableValues`**: Contains other fields to customize the loot tables in detail.
 
 These settings can be changed at any time and the behavior of the calibrated spawners will change without the need to replace them.
