@@ -23,7 +23,6 @@ public class ModConfigs {
 	public boolean calibratedSpawnerKeepMobOnBreak = true;
 	public boolean calibratedSpawnerKeepUpgradesOnBreak = true;
 	public boolean cursedBottleIsReusable = false;
-	public boolean addToLootTables = true;
 	public int crowdUpgradeValue = 18;
 	public int rangeUpgradeValue = 64;
 	public int speedUpgradeMaxValue = 400;
@@ -32,6 +31,9 @@ public class ModConfigs {
 	public int rangeDefaultValue = 16;
 	public int speedDefaultMaxValue = 800;
 	public int speedDefaultMinValue = 200;
+	public boolean addToLootTables = true;
+	public SpawnerSettings lootTableValues = new SpawnerSettings();
+
 	public ModConfigs() {
 		mob_blacklist.add("minecraft:allay");
 		mob_blacklist.add("minecraft:armadillo");
@@ -127,6 +129,46 @@ public class ModConfigs {
 
 		mob_blacklist.add("minecraft:illusioner");
 	}
+
+	public static class SpawnerSettings {
+		public int dungeonRolls = 1;
+		public float dungeonChance = 0.35f;
+		public int dungeonUpgradeCrowdWeight = 2;
+		public int dungeonUpgradeRangeWeight = 1;
+		public int dungeonUpgradeSpeedWeight = 0;
+		public int dungeonUpgradeRedstoneWeight = 2;
+		public int dungeonCalibratorWeight = 5;
+		public int dungeonIgniterWeight = 0;
+		public int dungeonCursedBottleWeight = 0;
+		public int endCityRolls = 1;
+		public float endCityChance = 0.2f;
+		public int endCityUpgradeCrowdWeight = 0;
+		public int endCityUpgradeRangeWeight = 0;
+		public int endCityUpgradeSpeedWeight = 0;
+		public int endCityUpgradeRedstoneWeight = 0;
+		public int endCityCalibratorWeight = 1;
+		public int endCityIgniterWeight = 2;
+		public int endCityCursedBottleWeight = 2;
+		public int bastionRolls = 1;
+		public float bastionChance = 0.25f;
+		public int bastionUpgradeCrowdWeight = 3;
+		public int bastionUpgradeRangeWeight = 3;
+		public int bastionUpgradeSpeedWeight = 1;
+		public int bastionUpgradeRedstoneWeight = 0;
+		public int bastionCalibratorWeight = 1;
+		public int bastionIgniterWeight = 2;
+		public int bastionCursedBottleWeight = 0;
+		public int ancientCityRolls = 1;
+		public float ancientCityChance = 0.3f;
+		public int ancientCityUpgradeCrowdWeight = 0;
+		public int ancientCityUpgradeRangeWeight = 1;
+		public int ancientCityUpgradeSpeedWeight = 1;
+		public int ancientCityUpgradeRedstoneWeight = 0;
+		public int ancientCityCalibratorWeight = 1;
+		public int ancientCityIgniterWeight = 2;
+		public int ancientCityCursedBottleWeight = 0;
+	}
+
 	public static ModConfigs loadConfig() {
 		if (!Files.exists(CONFIG_PATH)) {
 			ModConfigs defaultConfig = new ModConfigs();

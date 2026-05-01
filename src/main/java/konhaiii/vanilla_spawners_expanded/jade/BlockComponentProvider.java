@@ -7,6 +7,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.storage.TagValueOutput;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IServerDataProvider;
 
@@ -19,7 +20,7 @@ public enum BlockComponentProvider implements IServerDataProvider<@NotNull Block
 	}
 
 	@Override
-	public void appendServerData(CompoundTag compoundTag, BlockAccessor accessor) {
+	public void appendServerData(CompoundTag compoundTag, @NonNull BlockAccessor accessor) {
 
 		CompoundTag nbt = getCompoundTag(accessor);
 

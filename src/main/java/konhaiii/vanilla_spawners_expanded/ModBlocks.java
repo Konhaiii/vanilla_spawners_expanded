@@ -49,7 +49,7 @@ public class ModBlocks {
 	}
 
 	public static final BlockEntityType<@org.jetbrains.annotations.NotNull CalibratedSpawnerBlockEntity> CALIBRATED_SPAWNER_BLOCK_ENTITY =
-			register(CalibratedSpawnerBlockEntity::new, CALIBRATED_SPAWNER);
+			register(CalibratedSpawnerBlockEntity::new);
 
 	public static final BlockItem CALIBRATED_SPAWNER_ITEM = new CalibratedSpawnerItem(
 			CALIBRATED_SPAWNER,
@@ -85,10 +85,9 @@ public class ModBlocks {
 	}
 
 	private static <T extends BlockEntity> BlockEntityType<T> register(
-			FabricBlockEntityTypeBuilder.Factory<? extends T> entityFactory,
-			Block... blocks
+			FabricBlockEntityTypeBuilder.Factory<? extends T> entityFactory
 	) {
 		Identifier id = Identifier.fromNamespaceAndPath(VanillaSpawnersExpanded.MOD_ID, "calibrated_spawner_block_entity");
-		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, id, FabricBlockEntityTypeBuilder.<T>create(entityFactory, blocks).build());
+		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, id, FabricBlockEntityTypeBuilder.<T>create(entityFactory, new Block[]{ModBlocks.CALIBRATED_SPAWNER}).build());
 	}
 }
