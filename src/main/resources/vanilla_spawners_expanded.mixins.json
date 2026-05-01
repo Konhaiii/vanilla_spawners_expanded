@@ -3,7 +3,6 @@
 	"package": "konhaiii.vanilla_spawners_expanded.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin",
 		"MobEntityMixin"
 	],
 	"injectors": {

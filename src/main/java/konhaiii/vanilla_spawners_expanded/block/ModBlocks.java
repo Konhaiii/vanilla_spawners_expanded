@@ -38,7 +38,7 @@ public class ModBlocks {
 					.nonOpaque()
 	);
 	public static final BlockEntityType<CalibratedSpawnerBlockEntity> CALIBRATED_SPAWNER_BLOCK_ENTITY =
-			register(CalibratedSpawnerBlockEntity::new, CALIBRATED_SPAWNER);
+			register(CalibratedSpawnerBlockEntity::new);
 	private static Block register(Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings) {
 		RegistryKey<Block> blockKey = keyOfBlock();
 		Block block = blockFactory.apply(settings.registryKey(blockKey));
@@ -59,11 +59,10 @@ public class ModBlocks {
 	}
 
 	private static <T extends BlockEntity> BlockEntityType<T> register(
-			FabricBlockEntityTypeBuilder.Factory<? extends T> entityFactory,
-			Block... blocks
+			FabricBlockEntityTypeBuilder.Factory<? extends T> entityFactory
 	) {
 		Identifier id = Identifier.of(VanillaSpawnersExpanded.MOD_ID, "calibrated_spawner");
-		return Registry.register(Registries.BLOCK_ENTITY_TYPE, id, FabricBlockEntityTypeBuilder.<T>create(entityFactory, blocks).build());
+		return Registry.register(Registries.BLOCK_ENTITY_TYPE, id, FabricBlockEntityTypeBuilder.<T>create(entityFactory, new Block[]{ModBlocks.CALIBRATED_SPAWNER}).build());
 	}
 
 	public static void initialize() {
