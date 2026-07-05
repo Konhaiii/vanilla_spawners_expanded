@@ -1,4 +1,4 @@
-package konhaiii.vanilla_spawners_expanded;
+package konhaiii.vanilla_spawners_expanded.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

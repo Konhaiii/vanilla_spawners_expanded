@@ -19,6 +19,7 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -63,7 +64,7 @@ public class CursedBottleItem extends Item {
 	public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack itemStack, @NotNull Player player, @NotNull LivingEntity livingEntity, @NotNull InteractionHand interactionHand) {
 		EntityType<?> entityType = livingEntity.getType();
 		Identifier mobEntityPath = EntityType.getKey(entityType);
-		if (!player.level().isClientSide() && livingEntity.isAlive() && entityType != EntityType.PLAYER) {
+		if (!player.level().isClientSide() && livingEntity.isAlive() && entityType != EntityTypes.PLAYER) {
 			if (!VanillaSpawnersExpanded.config.mob_whitelist.isEmpty()) {
 				if (!VanillaSpawnersExpanded.config.mob_whitelist.contains(mobEntityPath.toString())) {
 					return InteractionResult.PASS;

@@ -1,5 +1,6 @@
-package konhaiii.vanilla_spawners_expanded.jade;
+package konhaiii.vanilla_spawners_expanded.client.jade;
 
+import konhaiii.vanilla_spawners_expanded.jade.JadePlugin;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;

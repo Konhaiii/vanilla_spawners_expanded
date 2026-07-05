@@ -1,5 +1,6 @@
-package konhaiii.vanilla_spawners_expanded;
+package konhaiii.vanilla_spawners_expanded.client;
 
+import konhaiii.vanilla_spawners_expanded.ModBlocks;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 

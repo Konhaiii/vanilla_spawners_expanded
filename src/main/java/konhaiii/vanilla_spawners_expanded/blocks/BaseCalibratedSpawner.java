@@ -28,6 +28,10 @@ import java.util.Optional;
 public abstract class BaseCalibratedSpawner {
 	private int spawnDelay = 20;
 	private boolean isLit = false;
+	public static final EntityProcessor SET_DISPLAY_ENTITY_ID = e -> {
+		e.setId(-1);
+		return e;
+	};
 	private boolean hasRedstoneUpgrade = false;
 	private boolean hasCrowdUpgrade = false;
 	private boolean hasRangeUpgrade = false;
@@ -265,7 +269,7 @@ public abstract class BaseCalibratedSpawner {
 				return null;
 			}
 
-			this.displayEntity = EntityType.loadEntityRecursive(compoundTag, level, EntitySpawnReason.SPAWNER, EntityProcessor.NOP);
+			this.displayEntity = EntityType.loadEntityRecursive(compoundTag, level, new EntitySpawnRequest(EntitySpawnReason.SPAWNER, true), SET_DISPLAY_ENTITY_ID);
 			compoundTag.size();
 		}
 
